@@ -1,0 +1,108 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Кафедра технической физики — Физтех УрФУ</title>
+    <link rel="stylesheet" href="style.css">
+    <link rel="stylesheet" href="department.css">
+</head>
+<body class="dept-page-body">
+
+    <!-- Анимированный фон (Aurora) -->
+    <div class="aurora-bg" aria-hidden="true"></div>
+
+    <header class="site-header site-header--compact">
+        <div class="header-content">
+            <p class="header-subtitle">Уральский федеральный университет</p>
+            <h1>Физико-технологический институт</h1>
+        </div>
+    </header>
+
+    <div class="top-nav-wrap">
+        <a href="index.html" class="back-button">
+            <span class="back-arrow">←</span> 
+            <span>Все кафедры</span>
+        </a>
+    </div>
+
+    <main class="dept-layout">
+        <aside class="dept-sidebar">
+            <nav class="sidebar-nav">
+                <a href="#about" class="sidebar-link active">О кафедре</a>
+                <a href="#science" class="sidebar-link">Наука и проекты</a>
+                <a href="#education" class="sidebar-link">Образование</a>
+                <a href="#career" class="sidebar-link">Студенческая жизнь</a>
+            </nav>
+        </aside>
+
+        <article class="dept-main-content">
+            
+            <div class="dept-title-block reveal">
+                <h2>Кафедра технической физики</h2>
+                <p class="dept-subtitle">Одна из старейших и ведущих кафедр Физтеха, основанная в 1949 году. Здесь готовят специалистов для атомной отрасли и ведут исследования в области материаловедения и ядерной медицины.</p>
+            </div>
+
+            <!-- Секция 1: О кафедре (стеклянная карточка) -->
+            <section id="about" class="content-section glass-card reveal">
+                <h3>О кафедре</h3>
+                <p>Кафедра технической физики — это первая физическая кафедра на физико-техническом факультете УПИ (ныне УрФУ). Выпускники составляют значительную часть инженерно-технологических кадров атомной промышленности и высокотехнологичных компаний Урала.</p>
+                
+                <!-- Фото с анимированной обводкой -->
+                <div class="image-frame text-wrap-image">
+                    <img src="images/building.jpg" alt="Здание Физтеха УрФУ" class="dept-image">
+                </div>
+                
+                <p>Сегодня кафедра входит в состав крупнейшего учебно-научного комплекса УрФУ и сотрудничает с предприятиями Росатома, институтами УрО РАН и зарубежными университетами. На кафедре работают 32 преподавателя, среди которых 10 докторов и 17 кандидатов наук.</p>
+            </section>
+
+            <!-- Секция 2: Наука и проекты -->
+            <section id="science" class="content-section glass-card reveal">
+                <h3>Наука и проекты</h3>
+                <p>Научная деятельность охватывает широкий спектр направлений — от физики конденсированного состояния до ядерной медицины и радиационного материаловедения.</p>
+                
+                <div class="science-grid">
+                    <div class="science-card glass-card">
+                        <h4>Ядерная медицина</h4>
+                        <p>На базе УрФУ создан Циклотронный центр ядерной медицины для производства радиофармпрепаратов и развития методов радиотерапии.</p>
+                    </div>
+                    <div class="science-card glass-card">
+                        <h4>Материалы и нанотехнологии</h4>
+                        <p>Исследуются интерметаллидные сплавы титана для авиадвигателей и магнитные наночастицы для функциональных материалов.</p>
+                    </div>
+                    <div class="science-card glass-card">
+                        <h4>Оптико-электронные системы</h4>
+                        <p>Разрабатываются оптико-электронные системы слежения для высокотехнологичных отраслей промышленности.</p>
+                    </div>
+                </div>
+
+                <div class="image-frame full-width-image">
+                    <img src="images/lab.jpg" alt="Лабораторное оборудование кафедры" class="dept-image">
+                </div>
+            </section>
+
+            <!-- Секция 3: Образование -->
+            <section id="education" class="content-section glass-card reveal">
+                <h3>Образование</h3>
+                <p>Кафедра ведёт подготовку по программам бакалавриата, специалитета и магистратуры. Студенты изучают микропроцессорную схемотехнику, физику конденсированного состояния и новые материалы.</p>
+                
+                <div class="image-frame text-wrap-image">
+                    <img src="images/students.jpg" alt="Студенты кафедры в лаборатории" class="dept-image">
+                </div>
+                
+                <p>Особое внимание уделяется практике: учащиеся с младших курсов вовлекаются в реальные научные проекты. Магистерские программы ориентированы на подготовку инженеров для Росатома и других высокотехнологичных компаний.</p>
+            </section>
+
+            <!-- Секция 4: Студенческая жизнь и карьера -->
+            <section id="career" class="content-section glass-card reveal">
+                <h3>Студенческая жизнь и карьера</h3>
+                <p>Физтех — это не только учёба, но и яркая внеучебная жизнь. Студенты участвуют в ежегодной конференции «Физика. Технологии. Инновации», где представляют свои разработки.</p>
+                <p>Выпускники успешно строят карьеру в науке, бизнесе и на производстве, работая на ключевых предприятиях атомной отрасли и в ведущих исследовательских центрах.</p>
+            </section>
+
+        </article>
+    </main>
+
+    <script src="department.js"></script>
+</body>
+</html>

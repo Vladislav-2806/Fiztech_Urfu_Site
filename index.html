@@ -1,0 +1,81 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Физтех УрФУ — Кафедры</title>
+    <link rel="stylesheet" href="style.css">
+    <link rel="stylesheet" href="department.css">
+</head>
+<body class="dept-page-body">
+
+    <!-- Aurora-фон (тот же эффект, что и на странице кафедры) -->
+    <div class="aurora-bg" aria-hidden="true"></div>
+
+    <header class="site-header site-header--compact main-header">
+        <div class="header-content">
+            <!-- МЕСТО ДЛЯ ЛОГОТИПА: положите файл logo.png в папку images/ -->
+            <img src="images/logo.png" alt="Логотип УрФУ" class="urfu-logo">
+            <p class="header-subtitle">Уральский федеральный университет</p>
+            <h1>Физико-технологический институт</h1>
+        </div>
+    </header>
+
+    <main class="main-page-content">
+
+        <!-- Вводный текст об институте в стеклянной карточке -->
+        <section class="intro-section glass-card reveal">
+            <h2>О институте</h2>
+            <p>Физико-технологический институт УрФУ — это современный учебно-научный центр в области ядерных, биомедицинских, информационных технологий и материаловедения. Мощные научные школы, международное сотрудничество, техническая оснащённость и связь с производством определяют конкурентоспособность института сегодня и уверенный взгляд в будущее.</p>
+            <p>На физтехе работает около 100 докторов наук и более 150 кандидатов наук[reference:2]. Здесь готовят специалистов для атомной отрасли, высокотехнологичных компаний и ведущих исследовательских центров Урала.</p>
+        </section>
+
+        <!-- Сетка кафедр -->
+        <section class="departments-grid-section reveal">
+            <h2>Кафедры института</h2>
+            <div class="departments-grid">
+                <!-- Карточки будут добавлены скриптом, но можно и вручную -->
+            </div>
+        </section>
+
+    </main>
+
+    <script>
+        const departments = [
+            { id: "rare-metals",   name: "Редких металлов и наноматериалов",           head: "д.х.н., проф. Рычков В.Н." },
+            { id: "radio-eco",     name: "Радиохимии и прикладной экологии",           head: "к.х.н., доц. Воронина А.В." },
+            { id: "phys-chem",     name: "Физико-химических методов анализа",          head: "д.х.н., проф. Ребрин О.И." },
+            { id: "tech-physics",  name: "Технической физики",                         head: "д.т.н., проф. Токманцев В.И.", featured: true },
+            { id: "exp-physics",   name: "Экспериментальной физики",                   head: "к.ф.-м.н., доц. Иванов В.Ю." },
+            { id: "theor-physics", name: "Теоретической физики и прикладной математики", head: "д.ф.-м.н., проф. Мазуренко В.Г." },
+            { id: "innovations",   name: "Инноватики и интеллектуальной собственности", head: "д.э.н., к.ф.-м.н., проф. Шульгин Д.Б." },
+            { id: "phys-instr",    name: "Физических приборов и методов контроля качества", head: "д.ф.-м.н., проф. Вайнштейн И.А." },
+            { id: "electrophys",   name: "Электрофизики",                              head: "д.ф.-м.н., проф. Никулин С.П." },
+            { id: "high-energy",   name: "Физики высокоэнергетических процессов",      head: "акад. Рыкованов Г.Н." }
+        ];
+
+        const grid = document.querySelector('.departments-grid');
+
+        departments.forEach(dept => {
+            const card = document.createElement('a');
+            card.className = 'department-card';
+            card.href = `department.html?id=${dept.id}`;
+
+            if (dept.featured) {
+                card.classList.add('active-department');
+            }
+
+            card.innerHTML = `
+                <h3>${dept.name}</h3>
+                <p class="head">${dept.head}</p>
+                ${dept.featured 
+                    ? '<span class="badge">Подробная информация</span>' 
+                    : '<p class="placeholder-text">Информация появится позже</p>'}
+            `;
+
+            grid.appendChild(card);
+        });
+    </script>
+
+</body>
+</html>
