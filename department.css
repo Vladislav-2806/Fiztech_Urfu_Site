@@ -14,8 +14,9 @@
 
 /* Убираем непрозрачный фон у body — он нужен только как fallback */
 .dept-page-body {
-    background: #eef1f8;
+    background: #dde6f5;          /* заметный голубоватый, точно не белый */
     position: relative;
+    isolation: isolate;           /* создаёт стек-контекст, чтобы z-index работал предсказуемо */
 }
 
 /* Aurora-фон как псевдоэлемент body — он точно окажется НАД background-color */
@@ -167,3 +168,453 @@
     .sidebar-nav { flex-direction: row; flex-wrap: wrap; }
     .text-wrap-image { float: none; width: 100%; margin: 0 0 20px 0; }
 }
+
+/* ============================================ */
+/* ===== ГЛАВНАЯ: HERO-БЛОК С CANVAS ===== */
+/* ============================================ */
+
+.main-page-content {
+    margin-top: 50px; /* больше воздуха от шапки */
+}
+
+.hero-section {
+    position: relative;
+    overflow: hidden;
+    border-radius: 28px;
+    padding: 80px 40px 90px;
+    margin: 0 0 60px 0;
+    background: linear-gradient(135deg, #0d1e4a 0%, #152e66 35%, #2149A1 75%, #2a5bc4 100%);
+    color: white;
+    min-height: 480px;
+    box-shadow: 0 25px 70px rgba(21, 46, 102, 0.35);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+
+.hero-canvas {
+    position: absolute;
+    inset: 0;
+    width: 100%;
+    height: 100%;
+    pointer-events: none;
+    z-index: 1;
+}
+
+.hero-content {
+    position: relative;
+    z-index: 2;
+    max-width: 760px;
+    margin: 0 auto;
+    text-align: center;
+}
+
+.hero-title {
+    color: white;
+    font-size: 2.4rem;
+    font-weight: 700;
+    margin: 0 0 30px 0;
+    letter-spacing: 1px;
+    text-shadow: 0 4px 20px rgba(0, 0, 0, 0.35);
+}
+
+.hero-text {
+    font-size: 1.12rem;
+    line-height: 1.75;
+    color: rgba(255, 255, 255, 0.92);
+    margin: 0 0 18px 0;
+}
+
+/* Появление по буквам (заголовок) */
+.letter {
+    display: inline-block;
+    opacity: 0;
+    transform: translateY(-15px);
+    transition: opacity 0.5s ease, transform 0.5s ease;
+}
+
+.reveal.visible .letter {
+    opacity: 1;
+    transform: translateY(0);
+}
+
+/* Появление по словам (текст) */
+.hero-text .word {
+    display: inline-block;
+    opacity: 0;
+    transform: translateY(15px);
+    transition: opacity 0.55s ease, transform 0.55s ease;
+    color: inherit;
+}
+
+.reveal.visible .hero-text .word {
+    opacity: 1;
+    transform: translateY(0);
+}
+
+/* Индикатор скролла */
+.scroll-hint {
+    position: absolute;
+    bottom: 22px;
+    left: 50%;
+    transform: translateX(-50%);
+    color: rgba(255, 255, 255, 0.75);
+    font-size: 1.6rem;
+    z-index: 3;
+    animation: scroll-bounce 2s ease-in-out infinite;
+    pointer-events: none;
+}
+
+@keyframes scroll-bounce {
+    0%, 100% { transform: translateX(-50%) translateY(0); opacity: 0.75; }
+    50% { transform: translateX(-50%) translateY(10px); opacity: 1; }
+}
+
+/* ============================================ */
+/* ===== ГЛАВНАЯ: СИЛЬНЫЙ HOVER НА КАРТОЧКАХ ===== */
+/* ============================================ */
+
+/* Переопределяем hover (идёт позже — побеждает) */
+.departments-grid .department-card {
+    position: relative;
+    overflow: hidden;
+    transition: transform 0.45s cubic-bezier(0.2, 0.8, 0.2, 1),
+                box-shadow 0.45s ease,
+                border-color 0.45s ease,
+                background 0.45s ease;
+    will-change: transform;
+}
+
+.departments-grid .department-card:hover {
+    transform: translateY(-12px) scale(1.025);
+    box-shadow: 
+        0 22px 50px rgba(33, 73, 161, 0.35),
+        0 0 40px rgba(255, 107, 53, 0.18);
+    border-color: rgba(33, 73, 161, 0.55);
+    background: linear-gradient(135deg, rgba(255, 255, 255, 0.85), rgba(232, 237, 247, 0.75));
+}
+
+/* Пробегающий блик */
+.departments-grid .department-card::before {
+    content: "";
+    position: absolute;
+    top: 0;
+    left: -120%;
+    width: 80%;
+    height: 100%;
+    background: linear-gradient(100deg,
+        transparent 0%,
+        rgba(255, 255, 255, 0.45) 50%,
+        transparent 100%);
+    transform: skewX(-20deg);
+    transition: left 0.7s cubic-bezier(0.4, 0, 0.2, 1);
+    pointer-events: none;
+    z-index: 1;
+}
+
+.departments-grid .department-card:hover::before {
+    left: 120%;
+}
+
+/* Стрелка, появляющаяся на hover */
+.departments-grid .department-card::after {
+    content: "→";
+    position: absolute;
+    bottom: 18px;
+    right: 22px;
+    font-size: 1.4rem;
+    font-weight: 600;
+    color: var(--urfu-blue);
+    opacity: 0;
+    transform: translateX(-12px);
+    transition: opacity 0.35s ease, transform 0.35s ease;
+    z-index: 2;
+}
+
+.departments-grid .department-card:hover::after {
+    opacity: 1;
+    transform: translateX(0);
+}
+
+/* Небольшой сдвиг заголовка при hover */
+.departments-grid .department-card h3 {
+    transition: transform 0.4s ease, color 0.4s ease;
+}
+
+.departments-grid .department-card:hover h3 {
+    transform: translateX(4px);
+    color: var(--urfu-blue);
+}
+
+/* Бейдж и подписи — на переднем плане */
+.departments-grid .department-card .badge,
+.departments-grid .department-card .head,
+.departments-grid .department-card .placeholder-text {
+    position: relative;
+    z-index: 2;
+}
+
+/* ============================================ */
+/* ===== ПУЛЬСИРУЮЩЕЕ ПОДЧЁРКИВАНИЕ У ЗАГОЛОВКА ===== */
+/* ============================================ */
+
+.departments-grid-section h2 {
+    position: relative;
+    display: inline-block;
+}
+
+.departments-grid-section h2::after {
+    content: "";
+    position: absolute;
+    bottom: -10px;
+    left: 0;
+    height: 3px;
+    border-radius: 2px;
+    background: linear-gradient(90deg, var(--urfu-blue), var(--urfu-accent));
+    animation: underline-pulse 3.5s ease-in-out infinite;
+}
+
+@keyframes underline-pulse {
+    0%, 100% { width: 80px; opacity: 0.8; }
+    50%      { width: 140px; opacity: 1; }
+}
+
+/* Адаптивность hero */
+@media (max-width: 700px) {
+    .hero-section {
+        padding: 55px 22px 70px;
+        min-height: 380px;
+        border-radius: 20px;
+    }
+    .hero-title {
+        font-size: 1.8rem;
+        margin-bottom: 22px;
+    }
+    .hero-text {
+        font-size: 1rem;
+    }
+    .departments-grid .department-card:hover {
+        transform: translateY(-6px) scale(1.01);
+    }
+}
+
+/* ============================================ */
+/* ===== НОВЫЙ ФОН: АНИМИРОВАННАЯ СЕТКА ===== */
+/* ============================================ */
+
+.dept-page-body {
+    background: #f4f6fb;
+}
+
+/* Фоновая canvas-сетка на всю страницу */
+.bg-canvas {
+    position: fixed;
+    inset: 0;
+    width: 100%;
+    height: 100%;
+    z-index: 1;                   /* выше градиента */
+    pointer-events: none;
+    opacity: 1;                   /* было 0.6 */
+}
+
+/* Мягкий градиентный слой поверх canvas, но под контентом */
+.bg-gradient {
+    position: fixed;
+    inset: -15%;                  /* вылезаем за края, чтобы при размытии не было видно границ */
+    z-index: 0;
+    pointer-events: none;
+    background:
+        radial-gradient(circle at 15% 20%, rgba(33, 73, 161, 0.45) 0%, transparent 42%),
+        radial-gradient(circle at 82% 18%, rgba(130, 90, 255, 0.35) 0%, transparent 42%),
+        radial-gradient(circle at 22% 82%, rgba(255, 100, 50, 0.30) 0%, transparent 42%),
+        radial-gradient(circle at 85% 85%, rgba(60, 180, 255, 0.38) 0%, transparent 42%),
+        linear-gradient(180deg, #e8edf9 0%, #d9e3f5 100%);
+    animation: meshFloat 28s ease-in-out infinite alternate;
+    filter: blur(28px) saturate(140%);
+}
+
+@keyframes meshFloat {
+    0%   { transform: scale(1.02) translate(0, 0)      rotate(0deg);   }
+    50%  { transform: scale(1.12) translate(-2%, 2%)   rotate(3deg);   }
+    100% { transform: scale(1.06) translate(2%, -1%)   rotate(-2deg);  }
+}
+
+/* Контент выше фона */
+.main-header,
+.main-page-content,
+.site-footer {
+    position: relative;
+    z-index: 2;
+}
+
+/* Скрываем старый aurora-блок, если он остался в HTML */
+.aurora-bg { display: none; }
+
+/* ============================================ */
+/* ===== НОВАЯ ШАПКА (ИНТЕГРИРОВАНА В ФОН) ===== */
+/* ============================================ */
+
+.main-header {
+    background: rgba(13, 30, 74, 0.13);
+    backdrop-filter: blur(6px) saturate(115%);
+    -webkit-backdrop-filter: blur(6px) saturate(115%);
+    border-bottom: 1px solid rgba(33, 73, 161, 0.10);
+    box-shadow: none;
+    padding: 0;
+    position: sticky;
+    top: 0;
+    z-index: 50;
+}
+
+.header-inner {
+    max-width: 1200px;
+    margin: 0 auto;
+    padding: 10px 24px;      /* было 20px */
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    gap: 24px;
+    min-height: 110px;       /* задаёт высоту затемнённой полосы */
+}
+
+.header-brand {
+    display: flex;
+    align-items: center;
+    gap: 16px;
+    text-decoration: none;
+    color: inherit;
+}
+
+.urfu-logo {
+    max-height: 95px;
+    width: auto;
+    display: block;
+    filter: drop-shadow(0 1px 3px rgba(0, 0, 0, 0.10));
+    background: none;      /* на всякий случай */
+    border: none;
+}
+.brand-text {
+    display: flex;
+    flex-direction: column;
+    line-height: 1.2;
+    gap: 2px;
+}
+.brand-institute {
+    font-size: 1.55rem;
+    font-weight: 600;
+    color: var(--urfu-dark-blue);
+    line-height: 1.15;
+    display: block;
+}
+
+.header-meta {
+    font-size: 1rem;
+    color: var(--text-muted);
+    letter-spacing: 0.5px;
+    white-space: nowrap;
+    border-left: 1px solid rgba(33, 73, 161, 0.18);
+    padding-left: 24px;
+}
+
+/* Компенсируем sticky-шапку при скролле к якорям */
+html { scroll-padding-top: 90px; }
+
+/* ============================================ */
+/* ===== ПОДВАЛ (ФУТЕР) ===== */
+/* ============================================ */
+
+.site-footer {
+    background: #0d1e3a;
+    color: rgba(255, 255, 255, 0.82);
+    margin-top: 80px;
+    padding: 60px 24px 0;
+    font-size: 0.9rem;
+    line-height: 1.6;
+}
+
+.footer-inner {
+    max-width: 1200px;
+    margin: 0 auto;
+    display: grid;
+    grid-template-columns: 1.6fr 1fr 1fr 1fr;
+    gap: 40px;
+    padding-bottom: 45px;
+}
+
+.footer-title {
+    font-size: 1.15rem;
+    font-weight: 700;
+    color: #fff;
+    margin: 0 0 10px 0;
+}
+
+.footer-desc {
+    margin: 0;
+    color: rgba(255, 255, 255, 0.55);
+    font-size: 0.85rem;
+    line-height: 1.7;
+    max-width: 320px;
+}
+
+.footer-heading {
+    font-size: 0.75rem;
+    font-weight: 700;
+    letter-spacing: 1.5px;
+    text-transform: uppercase;
+    color: var(--urfu-accent);
+    margin: 0 0 14px 0;
+}
+
+.footer-col p {
+    margin: 0 0 8px 0;
+}
+
+.footer-col a {
+    color: rgba(255, 255, 255, 0.9);
+    text-decoration: none;
+    transition: color 0.2s;
+    border-bottom: 1px solid transparent;
+}
+
+.footer-col a:hover {
+    color: var(--urfu-accent);
+    border-bottom-color: var(--urfu-accent);
+}
+
+.footer-note {
+    font-size: 0.78rem;
+    color: rgba(255, 255, 255, 0.4);
+    margin-top: 6px !important;
+}
+
+.footer-bottom {
+    max-width: 1200px;
+    margin: 0 auto;
+    padding: 22px 0;
+    border-top: 1px solid rgba(255, 255, 255, 0.1);
+    display: flex;
+    justify-content: space-between;
+    flex-wrap: wrap;
+    gap: 12px;
+    font-size: 0.78rem;
+    color: rgba(255, 255, 255, 0.4);
+}
+
+/* ============================================ */
+/* ===== АДАПТИВНОСТЬ ДЛЯ НОВЫХ БЛОКОВ ===== */
+/* ============================================ */
+
+@media (max-width: 900px) {
+    .footer-inner {
+        grid-template-columns: 1fr 1fr;
+        gap: 30px;
+    }
+}
+
+@media (max-width: 600px) {
+    .brand-institute {
+        font-size: 1.0rem;
+        white-space: normal;
+    }
+}
+

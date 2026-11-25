@@ -9,38 +9,80 @@
 </head>
 <body class="dept-page-body">
 
-    <!-- Aurora-фон (тот же эффект, что и на странице кафедры) -->
-    <div class="aurora-bg" aria-hidden="true"></div>
+    <!-- Анимированный фон с частицами (физическая сетка) -->
+    <canvas class="bg-canvas" id="bg-canvas" aria-hidden="true"></canvas>
+    <div class="bg-gradient" aria-hidden="true"></div>
 
-    <header class="site-header site-header--compact main-header">
-        <div class="header-content">
-            <!-- МЕСТО ДЛЯ ЛОГОТИПА: положите файл logo.png в папку images/ -->
-            <img src="images/logo.png" alt="Логотип УрФУ" class="urfu-logo">
-            <p class="header-subtitle">Уральский федеральный университет</p>
-            <h1>Физико-технологический институт</h1>
+    <!-- Шапка, интегрированная в фон (стеклянная панель) -->
+    <header class="main-header">
+        <div class="header-inner">
+            <a href="index.html" class="header-brand">
+                <img src="images/logo.png" alt="Логотип УрФУ" class="urfu-logo">
+                <div class="brand-text">
+                    <span class="brand-institute">Физико-технологический</span>
+                    <span class="brand-institute">институт</span>
+                </div>
+            </a>
+            <div class="header-meta">Екатеринбург · основан в 1949</div>
         </div>
     </header>
 
     <main class="main-page-content">
 
-        <!-- Вводный текст об институте в стеклянной карточке -->
-        <section class="intro-section glass-card reveal">
-            <h2>О институте</h2>
-            <p>Физико-технологический институт УрФУ — это современный учебно-научный центр в области ядерных, биомедицинских, информационных технологий и материаловедения. Мощные научные школы, международное сотрудничество, техническая оснащённость и связь с производством определяют конкурентоспособность института сегодня и уверенный взгляд в будущее.</p>
-            <p>На физтехе работает около 100 докторов наук и более 150 кандидатов наук[reference:2]. Здесь готовят специалистов для атомной отрасли, высокотехнологичных компаний и ведущих исследовательских центров Урала.</p>
+        <!-- HERO-БЛОК -->
+        <section class="hero-section reveal">
+            <canvas class="hero-canvas" id="hero-canvas"></canvas>
+            <div class="hero-content">
+                <h2 class="hero-title">Об институте</h2>
+                <p class="hero-text">⚛️ Физико-технологический институт УрФУ — это современный учебно-научный центр в области ядерных, биомедицинских, информационных технологий и материаловедения.</p>
+                <p class="hero-text">🎓 Институт сохранил преимущества уникальной советской системы образования, объединяющей науку, образование и производство. Здесь готовят специалистов по 10 направлениям бакалавриата, 4 специальностям и 16 магистерским программам.</p>
+                <p class="hero-text">🔬 На физтехе работает около 100 докторов наук и более 150 кандидатов наук. Научная инфраструктура включает ключевые центры превосходства и совместные лаборатории с институтами УрО РАН.</p>
+                <p class="hero-text">🌍 Мощные научные школы, международное сотрудничество и связь с производством определяют конкурентоспособность института сегодня и уверенный взгляд в будущее.</p>
+             </div>
+            <div class="scroll-hint" aria-hidden="true">↓</div>
         </section>
 
-        <!-- Сетка кафедр -->
+        <!-- СЕТКА КАФЕДР -->
         <section class="departments-grid-section reveal">
             <h2>Кафедры института</h2>
-            <div class="departments-grid">
-                <!-- Карточки будут добавлены скриптом, но можно и вручную -->
-            </div>
+            <div class="departments-grid"></div>
         </section>
 
     </main>
 
+    <!-- ПОДВАЛ С КОНТАКТАМИ -->
+    <footer class="site-footer">
+        <div class="footer-inner">
+            <div class="footer-col footer-col--brand">
+                <p class="footer-title">Физтех УрФУ</p>
+                <p class="footer-desc">Физико-технологический институт Уральского федерального университета имени первого Президента России Б.Н. Ельцина.</p>
+            </div>
+            <div class="footer-col">
+                <p class="footer-heading">Адрес</p>
+                <p>620002, г. Екатеринбург,<br>ул. Мира, 21</p>
+                <p class="footer-note">Корпус ФТИ, аудитория Ф-209 (дирекция)</p>
+            </div>
+            <div class="footer-col">
+                <p class="footer-heading">Контакты</p>
+                <p><a href="tel:+73433754151">+7 (343) 375-41-51</a> — дирекция</p>
+                <p><a href="tel:+73433759497">+7 (343) 375-94-97</a> — институт</p>
+                <p><a href="mailto:fizteh@urfu.ru">fizteh@urfu.ru</a></p>
+            </div>
+            <div class="footer-col">
+                <p class="footer-heading">Приёмная комиссия</p>
+                <p><a href="tel:+79644898874">+7 (964) 489-88-74</a></p>
+                <p><a href="mailto:fizteh.priem@urfu.ru">fizteh.priem@urfu.ru</a></p>
+                <p><a href="https://fizteh.urfu.ru" target="_blank" rel="noopener">fizteh.urfu.ru</a></p>
+            </div>
+        </div>
+        <div class="footer-bottom">
+            <span>© Физико-технологический институт УрФУ, 2026</span>
+            <span>Все контакты актуальны на момент публикации</span>
+        </div>
+    </footer>
+
     <script>
+        // ===== Данные кафедр =====
         const departments = [
             { id: "rare-metals",   name: "Редких металлов и наноматериалов",           head: "д.х.н., проф. Рычков В.Н." },
             { id: "radio-eco",     name: "Радиохимии и прикладной экологии",           head: "к.х.н., доц. Воронина А.В." },
@@ -55,16 +97,11 @@
         ];
 
         const grid = document.querySelector('.departments-grid');
-
         departments.forEach(dept => {
             const card = document.createElement('a');
             card.className = 'department-card';
             card.href = `department.html?id=${dept.id}`;
-
-            if (dept.featured) {
-                card.classList.add('active-department');
-            }
-
+            if (dept.featured) card.classList.add('active-department');
             card.innerHTML = `
                 <h3>${dept.name}</h3>
                 <p class="head">${dept.head}</p>
@@ -72,9 +109,184 @@
                     ? '<span class="badge">Подробная информация</span>' 
                     : '<p class="placeholder-text">Информация появится позже</p>'}
             `;
-
             grid.appendChild(card);
         });
+
+        // ===== Каскадное появление текста =====
+        document.querySelectorAll('.hero-text').forEach(el => {
+            const words = el.textContent.trim().split(/\s+/);
+            el.innerHTML = words.map((w, i) => 
+                `<span class="word" style="transition-delay:${i * 0.035}s">${w}</span>`
+            ).join(' ');
+        });
+
+        const heroTitle = document.querySelector('.hero-title');
+        if (heroTitle) {
+            const text = heroTitle.textContent;
+            heroTitle.innerHTML = text.split('').map((ch, i) => 
+                `<span class="letter" style="transition-delay:${i * 0.05}s">${ch === ' ' ? '&nbsp;' : ch}</span>`
+            ).join('');
+        }
+
+        const io = new IntersectionObserver((entries) => {
+            entries.forEach(e => {
+                if (e.isIntersecting) {
+                    e.target.classList.add('visible');
+                    io.unobserve(e.target);
+                }
+            });
+        }, { threshold: 0.15 });
+
+        document.querySelectorAll('.reveal').forEach(el => io.observe(el));
+        requestAnimationFrame(() => {
+            setTimeout(() => document.querySelector('.hero-section')?.classList.add('visible'), 150);
+        });
+
+        // ===== Canvas hero (внутри блока) =====
+        (function initHeroCanvas() {
+            const canvas = document.getElementById('hero-canvas');
+            if (!canvas) return;
+            const ctx = canvas.getContext('2d');
+            let W = 0, H = 0, particles = [];
+            const CONNECT_DIST = 130;
+
+            function resize() {
+                const rect = canvas.getBoundingClientRect();
+                W = canvas.width = rect.width;
+                H = canvas.height = rect.height;
+            }
+
+            class Particle {
+                constructor() { this.reset(); }
+                reset() {
+                    this.x = Math.random() * W;
+                    this.y = Math.random() * H;
+                    this.vx = (Math.random() - 0.5) * 0.5;
+                    this.vy = (Math.random() - 0.5) * 0.5;
+                    this.r = Math.random() * 1.8 + 0.8;
+                    this.accent = Math.random() > 0.85;
+                }
+                update() {
+                    this.x += this.vx;
+                    this.y += this.vy;
+                    if (this.x < 0 || this.x > W) { this.vx *= -1; this.x = Math.max(0, Math.min(W, this.x)); }
+                    if (this.y < 0 || this.y > H) { this.vy *= -1; this.y = Math.max(0, Math.min(H, this.y)); }
+                }
+                draw() {
+                    ctx.beginPath();
+                    ctx.arc(this.x, this.y, this.r, 0, Math.PI * 2);
+                    ctx.fillStyle = this.accent ? 'rgba(255, 140, 90, 0.85)' : 'rgba(180, 210, 255, 0.75)';
+                    ctx.fill();
+                }
+            }
+
+            function init() {
+                resize();
+                particles = [];
+                const count = Math.min(80, Math.max(30, Math.floor(W * H / 12000)));
+                for (let i = 0; i < count; i++) particles.push(new Particle());
+            }
+
+            function animate() {
+                ctx.clearRect(0, 0, W, H);
+                for (let i = 0; i < particles.length; i++) {
+                    for (let j = i + 1; j < particles.length; j++) {
+                        const dx = particles[i].x - particles[j].x;
+                        const dy = particles[i].y - particles[j].y;
+                        const dist = Math.sqrt(dx * dx + dy * dy);
+                        if (dist < CONNECT_DIST) {
+                            const alpha = (1 - dist / CONNECT_DIST) * 0.45;
+                            ctx.beginPath();
+                            ctx.moveTo(particles[i].x, particles[i].y);
+                            ctx.lineTo(particles[j].x, particles[j].y);
+                            ctx.strokeStyle = `rgba(160, 200, 255, ${alpha})`;
+                            ctx.lineWidth = 1;
+                            ctx.stroke();
+                        }
+                    }
+                }
+                particles.forEach(p => { p.update(); p.draw(); });
+                requestAnimationFrame(animate);
+            }
+
+            init();
+            animate();
+            window.addEventListener('resize', init);
+        })();
+
+        // ===== Canvas фоновой сетки (на всю страницу) =====
+        (function initBgCanvas() {
+            const canvas = document.getElementById('bg-canvas');
+            if (!canvas) return;
+            const ctx = canvas.getContext('2d');
+            let W = 0, H = 0, pts = [];
+            const DIST = 180;
+
+            function resize() {
+                W = canvas.width = window.innerWidth;
+                H = canvas.height = window.innerHeight;
+            }
+
+            class Dot {
+                constructor() {
+                    this.x = Math.random() * W;
+                    this.y = Math.random() * H;
+                    this.vx = (Math.random() - 0.5) * 0.35;
+                    this.vy = (Math.random() - 0.5) * 0.35;
+                    this.r = Math.random() * 1.6 + 0.6;
+                }
+                step() {
+                    this.x += this.vx;
+                    this.y += this.vy;
+                    if (this.x < 0 || this.x > W) this.vx *= -1;
+                    if (this.y < 0 || this.y > H) this.vy *= -1;
+                    this.x = Math.max(0, Math.min(W, this.x));
+                    this.y = Math.max(0, Math.min(H, this.y));
+                }
+            }
+
+            function init() {
+                resize();
+                pts = [];
+                const count = Math.min(90, Math.floor(W * H / 20000));
+                for (let i = 0; i < count; i++) pts.push(new Dot());
+            }
+
+            function loop() {
+                ctx.clearRect(0, 0, W, H);
+
+                for (let i = 0; i < pts.length; i++) {
+                    for (let j = i + 1; j < pts.length; j++) {
+                        const dx = pts[i].x - pts[j].x;
+                        const dy = pts[i].y - pts[j].y;
+                        const d = Math.sqrt(dx * dx + dy * dy);
+                        if (d < DIST) {
+                            const a = (1 - d / DIST) * 0.35;   /* было 0.12 */
+                            ctx.beginPath();
+                            ctx.moveTo(pts[i].x, pts[i].y);
+                            ctx.lineTo(pts[j].x, pts[j].y);
+                            ctx.strokeStyle = `rgba(33, 73, 161, ${a})`;
+                            ctx.lineWidth = 1;
+                            ctx.stroke();
+                        }
+                    }
+                }
+
+                pts.forEach(p => {
+                    ctx.beginPath();
+                    ctx.arc(p.x, p.y, p.r, 0, Math.PI * 2);
+                    ctx.fillStyle = 'rgba(33, 73, 161, 0.5)';   /* было 0.25 */
+                    ctx.fill();
+                    p.step();
+                });
+
+                requestAnimationFrame(loop);
+            }
+
+            init();
+            loop();
+            window.addEventListener('resize', init);
+        })();
     </script>
 
 </body>
